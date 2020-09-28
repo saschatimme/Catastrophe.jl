@@ -6,7 +6,7 @@ This code accomplishes the article `Catastrophe in Elastic Tensegrity Frameworks
 
 ```jula
 using Pkg
-Pkg.add("https://github.com/saschatimme/catastrophe")
+Pkg.add(url="https://github.com/saschatimme/Catastrophe.jl.git")
 ```
 
 ## Usage
