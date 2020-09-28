@@ -159,7 +159,7 @@ function start_demo()
       parameters = [p₂; r; c; rc; a; b],
     )
   end
-  monodromy_res = monodromy_solve(P₁, target_solutions_count = 144)
+  monodromy_res = monodromy_solve(P₁, target_solutions_count = 72)
   rand_lin_space = let p₂ = [2, 0.25], r = [0.25, 0.25], c = [1, 0], rc = [0.5]
     fixed = [p₂; r; c; rc]
     () -> [fixed; randn(3)]
