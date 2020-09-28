@@ -459,7 +459,7 @@ function start_demo(;
     catastrophe_set = nothing,
 )
 
-    fourbar_data = jldopen("data/fourbar_catastrophe.jld2")
+    fourbar_data = jldopen(joinpath(@__DIR__, "../data/fourbar_catastrophe.jld2"))
     # if discriminant === nothing
     #     discriminant = fourbar_data["discriminant"]
     # end
