@@ -79,14 +79,17 @@ function start_demo()
     L = Q̃ + G' * λ
     ∇L = differentiate(L, [x; d])
 
-    HL = CompiledSystem(System(∇L, [x; d], [λ; p₁; p₂; r; c; rc]))
-    dG = CompiledSystem(System(G, [x; d], [λ; p₁; p₂; r; c; rc]))
+    HL = InterpretedSystem(System(∇L, [x; d], [λ; p₁; p₂; r; c; rc]))
+    dG = InterpretedSystem(System(G, [x; d], [λ; p₁; p₂; r; c; rc]))
 
     (s, params) -> begin
       v = s[1:4]
       q = [s[5:end]; params]
-      W = jacobian!(zeros(4, 4), HL, v, q)
-      V = nullspace(jacobian!(zeros(3, 4), dG, v, q))
+      W = zeros(4, 4)
+      jacobian!(W, HL, v, q)
+      J = zeros(3, 4)
+      jacobian!(J, dG, v, q)
+      V = nullspace(J)
       all(e -> e ≥ 1e-14, eigvals(V' * W * V))
     end
   end
@@ -180,6 +183,8 @@ function start_demo()
   let
     scene, layout = layoutscene(30, resolution = (1300, 1470))
     ax = (layout[1:3, 1] = LAxis(scene, title = "Control plane"))
+    ax.xzoomlock = true
+    ax.yzoomlock = true
     layout[1:3, 2] = buttongrid = GridLayout(tellwidth = true)
     energy_ax =
       (layout[4, 1:2] = LAxis(scene, title = "Energy landscape", xlabel = "θ", ylabel = "Q"))

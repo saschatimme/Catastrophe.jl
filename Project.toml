@@ -15,10 +15,10 @@ Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [compat]
-AbstractPlotting = "0.12.10"
+AbstractPlotting = "=0.12.10"
 ColorSchemes = "3.10"
 FileIO = "1.4.3"
 GLMakie = "0.1.11"
-HomotopyContinuation = "2.0.6"
+HomotopyContinuation = "2.3"
 JLD2 = "0.2"
 Parameters = "0.12.1"

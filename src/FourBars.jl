@@ -320,14 +320,17 @@ function local_minimum_checker(;
     L′ = HC.subs(L, p[:, 1] => [real(A), imag(A)], p[:, 2] => [real(B), imag(B)])
     Y = [p[:, 5]; p[:, 6]]
     ∇L = HC.differentiate(L′, [X; δ])
-    HL = HC.CompiledSystem(HC.System(∇L, [X; δ], [λ; Y]))
-    dG = HC.CompiledSystem(HC.System(G, [X; δ], [λ; Y]))
+    HL = HC.InterpretedSystem(HC.System(∇L, [X; δ], [λ; Y]))
+    dG = HC.InterpretedSystem(HC.System(G, [X; δ], [λ; Y]))
 
     (s, params) -> begin
         v = s[1:6]
         q = [s[7:end]; params]
-        W = HC.jacobian!(zeros(6, 6), HL, v, q)
-        V = nullspace(HC.jacobian!(zeros(5, 6), dG, v, q))
+        W = zeros(6, 6)
+        HC.jacobian!(W, HL, v, q)
+        J = zeros(5, 6)
+        HC.jacobian!(J, dG, v, q)
+        V = nullspace(J)
         E = eigvals(V' * W * V)
         all(e -> e > 1e-8, E)
     end
